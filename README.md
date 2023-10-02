@@ -523,7 +523,7 @@ We will now run multiple tests on your code, here is an example run:
 - (data) [0x404000] = {10 random bytes},
 - rdi = 0x404000
 ```
-
+Bài này ta sẽ thực hiện một vòng lặp while. Lặp lại tới khi nào có phần tử bằng không và kết quả là số lần lặp lại.
 ```asm
 section.text
     global _start
@@ -575,6 +575,7 @@ We will now run multiple tests on your code, here is an example run:
 - (data) [0x404000] = {10 random bytes},
 - rdi = 0x404000
 ```
+Challange này chúng ta cần chú ý đến việc gọi hàm foo. Khi ta gọi hàm sẽ truyền vào tham số ```rax``` và ```rdi``` sẽ bị thay đổi trong khi chạy hàm hên cần lưu ```rax``` và ```rdi``` lại trước khi gọi hàm.
 ```asm
 section.text
     global _start
