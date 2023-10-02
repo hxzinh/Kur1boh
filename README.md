@@ -366,6 +366,7 @@ We will now set the following in preparation for your code:
 - Loading your given code at: 0x4000ce
 - (stack) [0x7fffff1ffff8] = 0xeb
 ```
+Challenge này chúng ta sẽ sử dụng lệnh ```jmp```, trong bài này ta cần chú ý lệnh jmp đầu tiên là ```relative jump to 0x51 bytes from its current position```. Tức ta cần jmp qua 0x51 bytes address ta có thể sử dụng lệnh nop ở mỗi dòng -> 51 dòng nop hoặc là ```times 0x51 nop```. Sau đó jmp đến sau 0x51 lần nop đó bằng ```jmp here``` (mình không biết sao ```jmp 0x51``` lại bị hụt 4 dòng nữa nên... anyway ```jmp here```).
 ```asm
 jmp here
 times 0x51 nop
@@ -394,6 +395,7 @@ We will now run multiple tests on your code, here is an example run:
 - (data) [0x404000] = {4 random dwords]}
 - rdi = 0x404000
 ```
+Bài này đơn giản là xét điều kiện rồi tính toán thôi.
 ```asm
 section.text
     global _start
@@ -455,6 +457,7 @@ Here is an example table:
     [0x40435c] = 0x40329f
     [0x404364] = 0x40334c
 ```
+Chúng ta chỉ cần chú ý nếu **rdi <= 3** thì ```jmp [rdi * 8]``` còn không thì ```jmp [rsi + 32]``` (vì rdi >= 4)
 ```asm
 section.text
     global _start
@@ -480,6 +483,7 @@ We will now set the following in preparation for your code:
 - rdi = 0x404118
 - rsi = 71
 ```
+Challenge này ta sử dụng vòng lặp tính tổng n phần tử rồi ```div rbx``` (rbx = n) để lấy trung bình cộng.
 ```asm
 section.text
     global _start
@@ -490,15 +494,13 @@ _start:
     call get_sum
 
 get_sum:
-    add rax, [rdi]
-    add rdi, 8
     dec rsi
+    add rax, [rdi + rsi * 8]
     cmp rsi, 0
     jne get_sum
     jmp end
 
 end:
-    mov rdx, 0
     div rbx
 ```
 ## Challenge_21: Implementing strlen
@@ -521,6 +523,7 @@ We will now run multiple tests on your code, here is an example run:
 - (data) [0x404000] = {10 random bytes},
 - rdi = 0x404000
 ```
+
 ```asm
 section.text
     global _start
